@@ -1,7 +1,7 @@
 // Service worker: guarda los archivos de la app para que abra sin conexión.
 // Al cambiar cualquier archivo de la app, subir la versión de CACHE_VERSION.
 
-const CACHE_VERSION = 'pendientes-v2';
+const CACHE_VERSION = 'pendientes-v3';
 const ARCHIVOS = [
   './',
   './index.html',
@@ -16,6 +16,8 @@ const ARCHIVOS = [
   './progreso.mjs',
   './manifest.webmanifest',
   './icon.svg',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 self.addEventListener('install', (evento) => {
