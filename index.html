@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XTH</title>
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="navegacion" aria-label="Secciones">
+      <div class="marca">XTH</div>
+      <button type="button" data-vista="hoy" aria-pressed="true">
+        <span class="icono" aria-hidden="true">◎</span><span>Hoy</span>
+      </button>
+      <button type="button" data-vista="tareas" aria-pressed="false">
+        <span class="icono" aria-hidden="true">☑</span><span>Tareas</span>
+      </button>
+      <button type="button" data-vista="juego" aria-pressed="false">
+        <span class="icono" aria-hidden="true">★</span><span>Juego</span>
+      </button>
+      <button type="button" data-vista="contenido" aria-pressed="false">
+        <span class="icono" aria-hidden="true">▣</span><span>Contenido</span>
+      </button>
+    </nav>
+
+    <main class="contenido">
+      <header class="cabecera">
+        <h1>XTH</h1>
+        <p id="resumen" class="resumen" aria-live="polite"></p>
+      </header>
+
+      <section id="vista-hoy" class="vista activa" data-vista="hoy" aria-labelledby="titulo-hoy">
+        <h2 id="titulo-hoy">Hoy</h2>
+        <div id="progreso-hoy" class="progreso"></div>
+        <label for="horas-libres">Mis horas libres (ej. 09:00, 14:00, 19:00)</label>
+        <input id="horas-libres" type="text" placeholder="Escríbelas cuando las sepas">
+        <ul id="metas" class="lista"></ul>
+        <h3>Reparto del día</h3>
+        <ol id="plan" class="plan"></ol>
+      </section>
+
+      <section id="vista-tareas" class="vista" data-vista="tareas" aria-labelledby="titulo-tareas">
+        <h2 id="titulo-tareas">Tareas</h2>
+        <form id="formulario" class="formulario" autocomplete="off">
+          <label for="nueva-tarea" class="sr-only">Nueva tarea</label>
+          <input id="nueva-tarea" name="titulo" type="text" placeholder="Escribe un pendiente y presiona Enter" maxlength="200" required>
+          <button type="submit">Agregar</button>
+        </form>
+        <p id="error" class="error" role="alert" hidden>El pendiente no puede estar vacío.</p>
+        <div id="progreso-tareas" class="progreso"></div>
+
+        <div class="filtros" role="group" aria-label="Filtrar pendientes">
+          <button type="button" data-filtro="todas" aria-pressed="true">Todas</button>
+          <button type="button" data-filtro="pendientes" aria-pressed="false">Pendientes</button>
+          <button type="button" data-filtro="hechas" aria-pressed="false">Hechas</button>
+        </div>
+
+        <ul id="lista" class="lista"></ul>
+        <p id="vacio" class="vacio" hidden>No hay nada aquí todavía.</p>
+      </section>
+
+      <section id="vista-juego" class="vista" data-vista="juego" aria-labelledby="titulo-juego">
+        <h2 id="titulo-juego">Juego</h2>
+        <p class="pendiente">Los supuestos de las reglas siguen por confirmar. Los premios de la tienda y las horas libres se conectarán después.</p>
+        <div id="juego-panel"></div>
+      </section>
+
+      <section id="vista-contenido" class="vista" data-vista="contenido" aria-labelledby="titulo-contenido">
+        <h2 id="titulo-contenido">Contenido</h2>
+        <p class="pendiente">Próximamente: lo que haya en la carpeta de Drive y su estado de publicación.</p>
+        <div id="progreso-contenido" class="progreso"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
