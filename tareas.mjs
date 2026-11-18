@@ -5,12 +5,14 @@ export function validarTitulo(titulo) {
   return typeof titulo === 'string' && titulo.trim().length > 0;
 }
 
-export function crearTarea(titulo, id, creada = new Date().toISOString()) {
+export function crearTarea(titulo, id, creada = new Date().toISOString(), categoria = 'otros', vence = null) {
   return {
     id,
     titulo: titulo.trim(),
     hecha: false,
     creada,
+    categoria,
+    ...(vence ? { vence } : {}),
   };
 }
 
@@ -31,7 +33,7 @@ export function fusionarTareas(actuales, importadas) {
   const nuevas = importadas.filter(
     (t) => validarTitulo(t?.titulo) && !ids.has(t.id),
   );
-  return [...actuales, ...nuevas.map((t) => crearTarea(t.titulo, t.id, t.creada))];
+  return [...actuales, ...nuevas.map((t) => crearTarea(t.titulo, t.id, t.creada, t.categoria, t.vence))];
 }
 
 export function filtrarTareas(lista, filtro) {

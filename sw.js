@@ -1,21 +1,27 @@
 // Service worker: guarda los archivos de la app para que abra sin conexión.
 // Al cambiar cualquier archivo de la app, subir la versión de CACHE_VERSION.
 
-const CACHE_VERSION = 'pendientes-v4';
+const CACHE_VERSION = 'pendientes-v14';
 const ARCHIVOS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
-  './hoy.js',
   './juego.js',
-  './barra.js',
+  './avatar.js',
+  './mobs.js',
+  './mobs.mjs',
+  './skin.mjs',
+  './contenido.js',
+  './contenido.json',
+  './deducir.mjs',
+  './categorias.mjs',
+  './publicaciones.mjs',
   './tareas.mjs',
-  './organizador.mjs',
   './juego.mjs',
   './progreso.mjs',
   './reglas.mjs',
-  './horas.mjs',
+  './misiones.mjs',
   './manifest.webmanifest',
   './icon.svg',
   './icon-192.png',

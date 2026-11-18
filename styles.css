@@ -8,7 +8,6 @@
   --acento-texto: #ffffff;
   --borde: #d6d3d1;
   --error: #b91c1c;
-  --barra: #ffffff;
   color-scheme: light dark;
 }
 
@@ -21,7 +20,6 @@
     --acento-suave: #1e3a8a;
     --borde: #57534e;
     --error: #f87171;
-    --barra: #292524;
   }
 }
 
@@ -35,58 +33,19 @@ body {
   min-height: 100vh;
 }
 
-/* ---- Móvil: contenido en columna y barra inferior ---- */
-
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.navegacion {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  background: var(--barra);
-  border-top: 1px solid var(--borde);
-  z-index: 10;
-}
-
-.navegacion .marca { display: none; }
-
-.navegacion button {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  min-height: 52px;
-  padding: 4px;
-  border: none;
-  background: transparent;
-  color: var(--texto-suave);
-  font-size: 0.75rem;
-}
-
-.navegacion button .icono { font-size: 1.25rem; line-height: 1; }
-
-.navegacion button[aria-pressed="true"] {
-  color: var(--acento);
-  font-weight: 600;
-}
-
 .contenido {
   flex: 1;
   width: 100%;
-  padding: 16px 16px 96px;
+  padding: 16px 16px 24px;
 }
 
 .cabecera h1 { margin: 8px 0 4px; font-size: 1.75rem; letter-spacing: 0.02em; }
-.resumen { margin: 0 0 16px; color: var(--texto-suave); }
 
 .vista { display: none; }
 .vista.activa { display: block; }
@@ -94,15 +53,6 @@ body {
 .vista h2 { margin: 16px 0 12px; font-size: 1.25rem; }
 .vista h3 { margin: 20px 0 8px; font-size: 1rem; color: var(--texto-suave); }
 .vista label { display: block; margin: 0 0 6px; color: var(--texto-suave); font-size: 0.9rem; }
-.vista > input[type="text"] { width: 100%; margin-bottom: 12px; }
-
-.pendiente {
-  padding: 16px;
-  border: 1px dashed var(--borde);
-  border-radius: 12px;
-  color: var(--texto-suave);
-}
-
 .formulario { display: flex; gap: 8px; }
 
 input[type="text"] {
@@ -141,16 +91,7 @@ button[type="submit"] {
 
 .error { color: var(--error); margin: 8px 0 0; }
 
-.filtros { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
-.filtros button[aria-pressed="true"] {
-  background: var(--acento);
-  border-color: var(--acento);
-  color: var(--acento-texto);
-}
-
 .lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-
-.plan { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
 
 .tarea {
   display: flex;
@@ -178,7 +119,24 @@ button[type="submit"] {
   color: var(--error);
 }
 
-.vacio { text-align: center; color: var(--texto-suave); padding: 32px 0; }
+
+/* Juego: mismo ritmo que las demás secciones. */
+.marcador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.marcador > div {
+  padding: 12px;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--tarjeta);
+}
+.marcador dt { font-size: 0.85rem; color: var(--texto-suave); }
+.marcador dd { margin: 4px 0 0; font-size: 1.25rem; font-weight: 700; }
+.tienda { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.tienda button { flex: 1 1 220px; }
 
 .sr-only {
   position: absolute;
@@ -193,67 +151,173 @@ button[type="submit"] {
   .formulario { flex-direction: column; }
 }
 
-/* ---- Computadora: barra lateral y dos columnas ---- */
+@media (min-width: 900px) { .contenido { padding: 32px 40px 40px; max-width: 880px; margin: 0 auto; } }
 
-@media (min-width: 900px) {
-  .app { flex-direction: row; }
-
-  .navegacion {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    width: 220px;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 6px;
-    padding: 24px 16px;
-    border-top: none;
-    border-right: 1px solid var(--borde);
-  }
-
-  .navegacion .marca {
-    display: block;
-    margin-bottom: 16px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--acento);
-  }
-
-  .navegacion button {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 12px;
-    width: 100%;
-    min-height: 44px;
-    padding: 0 12px;
-    font-size: 1rem;
-    border: none;
-  }
-
-  .navegacion button[aria-pressed="true"] {
-    background: var(--acento-suave);
-    color: var(--texto);
-  }
-
-  .contenido { padding: 32px 40px 40px; max-width: 880px; }
+/* Tema estilo bloques (Minecraft): tierra, pasto y piedra con bordes marcados. */
+:root {
+  --mc-tierra: #5b4330;
+  --mc-pasto: #5f9e3a;
+  --mc-piedra: #6b6f72;
+  --mc-borde-oscuro: #1d1a16;
+  --mc-texto: #f3efe6;
 }
+body { background: #3a2e24; color: var(--mc-texto); }
+button {
+  background: var(--mc-piedra);
+  color: var(--mc-texto);
+  border: 3px solid var(--mc-borde-oscuro);
+  border-radius: 0;
+  box-shadow: inset -3px -3px 0 rgb(0 0 0 / 0.35), inset 3px 3px 0 rgb(255 255 255 / 0.15);
+  text-shadow: 1px 1px 0 var(--mc-borde-oscuro);
+}
+button:hover { filter: brightness(1.12); }
+button:active { transform: translateY(2px); box-shadow: inset 3px 3px 0 rgb(0 0 0 / 0.35); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button[aria-pressed="true"] {
+  background: var(--mc-pasto);
+  border-color: var(--mc-borde-oscuro);
+  color: #fff;
+}
+.marcador > div, .tarea {
+  background: #4a3b2e;
+  border: 3px solid var(--mc-borde-oscuro);
+  border-radius: 0;
+}
+.marcador dd, h1, h2, h3 { font-family: "Press Start 2P", monospace; letter-spacing: 0; }
+h1, h2 { font-size: 1rem; line-height: 1.6; }
+h3 { font-size: 0.7rem; color: #e8d9b5; }
 
-/* Barras de progreso: cada sección muestra su avance. */
-.progreso { margin: 12px 0 20px; }
-.barra {
-  height: 14px;
-  border-radius: 999px;
-  background: var(--acento-suave);
-  overflow: hidden;
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.12);
+/* Avatar tipo skin: la foto se muestra en bloques. */
+.avatar { display: flex; align-items: center; gap: 16px; margin: 12px 0 20px; }
+.boton-subir { display: inline-block; cursor: pointer; padding: 8px 10px; background: var(--mc-piedra); border: 3px solid var(--mc-borde-oscuro); color: var(--mc-texto); text-shadow: 1px 1px 0 var(--mc-borde-oscuro); }
+.boton-subir input { display: none; }
+
+/* Tarjetas por sección del juego. */
+
+/* Estilo más moderno: bloques con sombra suave y menos contraste de pixel. */
+.marcador dd, h1, h2, h3 { font-family: "Press Start 2P", monospace; }
+.marcador dd { font-size: 1rem; }
+button { border-radius: 4px; }
+
+/* Carpetas de tareas, con su mob de Minecraft. */
+.carpeta-cabecera { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.carpeta-cabecera h3 { margin: 0; }
+
+/* Animaciones de recompensa. */
+.juego-panel, #juego-panel { position: relative; }
+.ganancia {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  font-family: "Press Start 2P", monospace; font-size: 1.1rem; color: #ffe066;
+  text-shadow: 2px 2px 0 var(--mc-borde-oscuro); pointer-events: none;
+  animation: subir-desvanecer 1.2s ease-out forwards; z-index: 5;
 }
-.barra .relleno {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--acento), color-mix(in srgb, var(--acento) 60%, #fff));
-  transition: width 300ms ease-out;
+@keyframes subir-desvanecer {
+  0% { opacity: 0; transform: translate(-50%, 16px) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, 0) scale(1.15); }
+  100% { opacity: 0; transform: translate(-50%, -48px) scale(1); }
 }
-.barra-texto { margin: 6px 0 0; font-size: 0.9rem; color: var(--texto-suave); }
+.marcador > div { transition: transform 200ms ease-out, background 200ms; }
+.marcador > div:active { transform: scale(0.97); }
 @media (prefers-reduced-motion: reduce) {
-  .barra .relleno { transition: none; }
+  .ganancia { animation: none; opacity: 0; }
 }
+
+/* Urgentes: aviso grande en rojo. */
+.urgentes:empty { display: none; }
+.urgentes { margin: 12px 0 16px; padding: 12px; background: #5a1414; border: 4px solid #ff3b30; animation: pulso-rojo 1.6s ease-in-out infinite; }
+.urgente-titulo { margin: 0 0 8px; color: #ff6b61; font-size: 0.9rem; }
+.urgente-lista { margin: 0; padding-left: 18px; font-size: 1.1rem; font-weight: 700; color: #ffd6d2; }
+@keyframes pulso-rojo { 0%, 100% { box-shadow: 0 0 0 0 rgb(255 59 48 / 0.5); } 50% { box-shadow: 0 0 14px 4px rgb(255 59 48 / 0.7); } }
+
+/* Hoy: decoración y reparto. */
+.tarea { animation: aparecer 260ms ease-out; }
+.tarea .titulo { display: flex; align-items: center; }
+.tarea svg { flex: none; image-rendering: pixelated; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Tareas: carpetas con borde de pasto y movimiento. */
+.carpeta { margin: 12px 0; padding: 10px; background: #4a3b2e; border: 3px solid var(--mc-borde-oscuro); border-top: 8px solid var(--mc-pasto); transition: transform 180ms ease-out, box-shadow 180ms; animation: aparecer 300ms ease-out; }
+.carpeta:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgb(0 0 0 / 0.35); }
+.carpeta-cabecera svg { animation: balanceo 3s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes balanceo { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.tarea.hecha { animation: tachar 300ms ease-out; }
+@keyframes tachar { 0% { transform: scale(1); } 50% { transform: scale(1.03); background: #5f9e3a; } 100% { transform: scale(1); } }
+
+/* Juego: marcador con corazones dentro de su cuadro. */
+.marcador { grid-template-columns: repeat(2, 1fr); }
+.celda-puntos dd { font-size: 1.4rem; color: #ffe066; }
+.celda-vidas { grid-column: 1 / -1; }
+.corazones { display: flex; flex-wrap: wrap; gap: 4px; }
+.corazon-vivo { animation: latido 1.4s ease-in-out infinite; }
+.corazon-vacio { opacity: 0.7; }
+@keyframes latido { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+.marcador dd { overflow-wrap: anywhere; }
+
+/* Partículas al ganar puntos. */
+.particula { position: absolute; top: 24px; left: 50%; width: 8px; height: 8px; background: #ffe066; border: 1px solid var(--mc-borde-oscuro); pointer-events: none; animation: volar 900ms ease-out forwards; z-index: 4; }
+@keyframes volar { from { opacity: 1; transform: translate(0, 0); } to { opacity: 0; transform: translate(var(--dx), var(--dy)); } }
+
+/* Skin de cuerpo completo. */
+.avatar { align-items: flex-end; }
+.skin-marco { padding: 12px; background: linear-gradient(#7ec8f0 60%, #5f9e3a 60%); border: 4px solid var(--mc-borde-oscuro); }
+.skin-cuerpo { display: block; width: 96px; height: 192px; image-rendering: pixelated; animation: respirar 2.4s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes respirar { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+@media (prefers-reduced-motion: reduce) {
+  .urgentes, .carpeta-cabecera svg, .corazon-vivo, .skin-cuerpo, .tarea, .carpeta { animation: none; }
+  .particula { display: none; }
+}
+
+/* Contenido. */
+.contenido-cabecera { display: flex; align-items: center; gap: 12px; padding: 12px; background: #4a3b2e; border: 3px solid var(--mc-borde-oscuro); border-top: 8px solid var(--mc-pasto); margin-bottom: 12px; }
+.contenido-cabecera p { margin: 0; }
+.boton-enlace { display: inline-block; padding: 12px 16px; margin-bottom: 12px; background: var(--mc-pasto); color: #fff; border: 3px solid var(--mc-borde-oscuro); text-decoration: none; text-shadow: 1px 1px 0 var(--mc-borde-oscuro); }
+.boton-enlace:hover { filter: brightness(1.12); }
+.archivo-contenido { padding: 12px; background: #4a3b2e; border: 3px solid var(--mc-borde-oscuro); animation: aparecer 260ms ease-out; }
+.plan-redes { margin: 8px 0 0; padding-left: 20px; color: #e8d9b5; }
+
+/* Pantalla unificada y tarjetas con formato compartido. */
+.tarjeta { margin: 0 0 18px; padding: 16px; background: #3b3027; border: 3px solid var(--mc-borde-oscuro); border-top: 8px solid var(--mc-pasto); color: #f4ead1; }
+.tarjeta h2 { font-family: "Press Start 2P", monospace; font-size: .95rem; line-height: 1.7; }
+.formulario { align-items: center; flex-wrap: wrap; }
+.formulario > input[type="text"] { flex: 1 1 220px; }
+.marcar-urgente { display: inline-flex !important; align-items: center; gap: 6px; margin: 0 !important; white-space: nowrap; }
+.marcar-urgente input { accent-color: #ff3b30; }
+.destinos-tarea { color: #d8c7a2; font-size: .72rem; white-space: nowrap; }
+.contenido { padding-bottom: 24px; }
+.vista.activa.tarjeta { animation: aparecer 240ms ease-out; }
+@media (min-width: 720px) { .contenido { max-width: 900px; margin: 0 auto; } }
+
+/* Ajustes finales del formulario único. */
+@media (max-width: 380px) {
+  .formulario > input[type="text"] { flex: none; width: 100%; }
+}
+button[type="submit"] { background: var(--mc-pasto); border-color: var(--mc-borde-oscuro); color: #fff; }
+
+/* Ajustes de la lista única, meta mensual y detalles de publicaciones. */
+.subgrupo-tareas { margin-top: 10px; }
+.subgrupo-tareas h4 { margin: 8px 0; font-size: .72rem; color: #d9c8a3; }
+.tarea.objetivo { min-height: 40px; padding: 7px 10px; gap: 8px; font-size: .84rem; }
+.tarea.objetivo .titulo { font-size: .84rem; }
+.tarea.objetivo svg { width: 22px; height: 22px; }
+.tarea { flex-wrap: wrap; }
+.tarea .titulo { flex: 1 1 150px; }
+.destinos-tarea { flex: 1 1 100%; padding-left: 34px; white-space: normal; }
+.marcador { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.marcador > div { min-width: 0; padding: 10px; background: #4a3b2e; border: 3px solid var(--mc-borde-oscuro); }
+.marcador dt { color: #d9c8a3; font-size: .68rem; }
+.marcador dd { margin: 8px 0 0; }
+.progreso-mensual { margin: 14px 0 18px; }
+.progreso-mensual label { display: block; margin-bottom: 8px; font-size: .78rem; }
+.progreso-mensual progress { display: block; width: 100%; height: 20px; accent-color: var(--mc-pasto); }
+.juego-muerto { padding: 12px; background: #5a1414; border: 3px solid #ff3b30; color: #ffd6d2; font-weight: 700; }
+.tienda { display: flex; flex-wrap: wrap; gap: 8px; }
+.tienda button { flex: 1 1 220px; }
+.archivo-contenido { padding: 8px; background: #4a3b2e; border: 3px solid var(--mc-borde-oscuro); }
+.archivo-toggle { width: 100%; min-height: 40px; text-align: left; }
+.detalle-archivo { padding: 4px 10px 8px; }
+.detalle-archivo[hidden] { display: none; }
+.detalle-archivo p { margin: 8px 0 0; color: #d9c8a3; font-size: .8rem; }
+.lista-contenido-seccion { margin-top: 16px; }
+.lista-contenido-seccion h3 { margin: 8px 0; }
+.contenido-vacio { padding: 8px 0; color: #d9c8a3; font-size: .85rem; }
+.avatar { align-items: flex-end; }

@@ -3,11 +3,11 @@
 // Supuestos (confirmar): empieza con 0 corazones perdidos; comprar un corazón
 // restaura uno perdido; los puntos pueden no bajar de 0 al penalizar.
 
-export { PUNTOS, STRIKES_POR_CORAZON, CORAZONES_POR_RETO } from './reglas.mjs';
-import { PUNTOS, STRIKES_POR_CORAZON, CORAZONES_POR_RETO } from './reglas.mjs';
+export { PUNTOS, STRIKES_POR_PARTIDA, VIDAS_TOTALES, META_MENSUAL } from './reglas.mjs';
+import { PUNTOS, STRIKES_POR_PARTIDA, VIDAS_TOTALES } from './reglas.mjs';
 
 export function estadoInicial() {
-  return { puntos: 0, strikes: 0, corazonesPerdidos: 0, retosPendientes: 0 };
+  return { puntos: 0, strikes: 0, corazonesPerdidos: 0, retosPendientes: 0, muerto: false, mes: null };
 }
 
 function sumarPuntos(estado, cantidad) {
@@ -15,15 +15,14 @@ function sumarPuntos(estado, cantidad) {
 }
 
 function registrarStrike(estado) {
-  const strikes = estado.strikes + 1;
-  if (strikes < STRIKES_POR_CORAZON) return { ...estado, strikes };
-  const corazonesPerdidos = estado.corazonesPerdidos + 1;
-  const retosNuevos = corazonesPerdidos % CORAZONES_POR_RETO === 0 ? 1 : 0;
+  if (estado.muerto) return estado;
+  const strikes = Math.min(STRIKES_POR_PARTIDA, estado.strikes + 1);
+  const muerto = strikes >= STRIKES_POR_PARTIDA;
   return {
     ...estado,
-    strikes: strikes - STRIKES_POR_CORAZON,
-    corazonesPerdidos,
-    retosPendientes: estado.retosPendientes + retosNuevos,
+    strikes,
+    corazonesPerdidos: muerto ? VIDAS_TOTALES : estado.corazonesPerdidos,
+    muerto,
   };
 }
 
@@ -58,14 +57,27 @@ export function normalizarEstado(datos) {
     (campo) => Number.isInteger(datos[campo]) && (campo === 'puntos' || datos[campo] >= 0),
   );
   if (!valido) return estadoInicial();
-  return Object.fromEntries(CAMPOS_ENTEROS.map((campo) => [campo, datos[campo]]));
+  const strikes = Math.min(datos.strikes, STRIKES_POR_PARTIDA);
+  const muerto = datos.muerto === true || strikes >= STRIKES_POR_PARTIDA;
+  return {
+    ...Object.fromEntries(CAMPOS_ENTEROS.map((campo) => [campo, datos[campo]])),
+    strikes,
+    muerto,
+    corazonesPerdidos: muerto ? VIDAS_TOTALES : 0,
+    mes: typeof datos.mes === 'string' ? datos.mes : null,
+  };
 }
 
-export function comprarCorazon(estado) {
-  if (estado.puntos < PUNTOS.corazon || estado.corazonesPerdidos === 0) return estado;
-  return {
-    ...estado,
-    puntos: estado.puntos - PUNTOS.corazon,
-    corazonesPerdidos: estado.corazonesPerdidos - 1,
-  };
+// Suma los puntos de una misión completada.
+export function registrarMision(estado, puntos) {
+  return sumarPuntos(estado, puntos);
+}
+
+export function reiniciarPartida(estado) {
+  return { ...estado, strikes: 0, corazonesPerdidos: 0, retosPendientes: 0, muerto: false };
+}
+
+export function asegurarMes(estado, mes) {
+  if (!estado.mes || estado.mes === mes) return { ...estado, mes };
+  return { ...estado, mes, puntos: 0, strikes: 0, corazonesPerdidos: 0, retosPendientes: 0, muerto: false };
 }

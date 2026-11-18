@@ -8,72 +8,39 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="app">
-    <nav class="navegacion" aria-label="Secciones">
-      <div class="marca">XTH</div>
-      <button type="button" data-vista="hoy" aria-pressed="true">
-        <span class="icono" aria-hidden="true">◎</span><span>Hoy</span>
-      </button>
-      <button type="button" data-vista="tareas" aria-pressed="false">
-        <span class="icono" aria-hidden="true">☑</span><span>Tareas</span>
-      </button>
-      <button type="button" data-vista="juego" aria-pressed="false">
-        <span class="icono" aria-hidden="true">★</span><span>Juego</span>
-      </button>
-      <button type="button" data-vista="contenido" aria-pressed="false">
-        <span class="icono" aria-hidden="true">▣</span><span>Contenido</span>
-      </button>
-    </nav>
-
     <main class="contenido">
       <header class="cabecera">
         <h1>XTH</h1>
-        <p id="resumen" class="resumen" aria-live="polite"></p>
       </header>
 
-      <section id="vista-hoy" class="vista activa" data-vista="hoy" aria-labelledby="titulo-hoy">
-        <h2 id="titulo-hoy">Hoy</h2>
-        <div id="progreso-hoy" class="progreso"></div>
-        <label for="horas-libres">Mis horas libres (ej. 09:00, 14:00, 19:00)</label>
-        <input id="horas-libres" type="text" placeholder="Escríbelas cuando las sepas">
-        <ul id="metas" class="lista"></ul>
-        <h3>Reparto del día</h3>
-        <ol id="plan" class="plan"></ol>
-      </section>
-
-      <section id="vista-tareas" class="vista" data-vista="tareas" aria-labelledby="titulo-tareas">
-        <h2 id="titulo-tareas">Tareas</h2>
+      <section id="vista-hoy" class="vista activa tarjeta" data-vista="hoy" aria-labelledby="titulo-hoy">
+        <h2 id="titulo-hoy">Hoy + tareas</h2>
+        <div id="urgentes-hoy" class="urgentes"></div>
         <form id="formulario" class="formulario" autocomplete="off">
           <label for="nueva-tarea" class="sr-only">Nueva tarea</label>
-          <input id="nueva-tarea" name="titulo" type="text" placeholder="Escribe un pendiente y presiona Enter" maxlength="200" required>
+          <input id="nueva-tarea" name="titulo" type="text" placeholder="Escribe una tarea y su fecha si aplica" maxlength="200" required>
+          <label class="marcar-urgente"><input id="nueva-urgente" type="checkbox"> Urgente</label>
           <button type="submit">Agregar</button>
         </form>
-        <p id="error" class="error" role="alert" hidden>El pendiente no puede estar vacío.</p>
-        <div id="progreso-tareas" class="progreso"></div>
-
-        <div class="filtros" role="group" aria-label="Filtrar pendientes">
-          <button type="button" data-filtro="todas" aria-pressed="true">Todas</button>
-          <button type="button" data-filtro="pendientes" aria-pressed="false">Pendientes</button>
-          <button type="button" data-filtro="hechas" aria-pressed="false">Hechas</button>
-        </div>
-
-        <ul id="lista" class="lista"></ul>
-        <p id="vacio" class="vacio" hidden>No hay nada aquí todavía.</p>
+        <p id="error" class="error" role="alert" hidden>La tarea no puede estar vacía.</p>
+        <div id="carpetas"></div>
       </section>
 
-      <section id="vista-juego" class="vista" data-vista="juego" aria-labelledby="titulo-juego">
+      <section id="vista-juego" class="vista activa tarjeta" data-vista="juego" aria-labelledby="titulo-juego">
         <h2 id="titulo-juego">Juego</h2>
-        <p class="pendiente">Los supuestos de las reglas siguen por confirmar. Los premios de la tienda y las horas libres se conectarán después.</p>
+        <div id="avatar" class="avatar"></div>
         <div id="juego-panel"></div>
       </section>
 
-      <section id="vista-contenido" class="vista" data-vista="contenido" aria-labelledby="titulo-contenido">
+      <section id="vista-contenido" class="vista activa tarjeta" data-vista="contenido" aria-labelledby="titulo-contenido">
         <h2 id="titulo-contenido">Contenido</h2>
-        <p class="pendiente">Próximamente: lo que haya en la carpeta de Drive y su estado de publicación.</p>
-        <div id="progreso-contenido" class="progreso"></div>
+        <div id="contenido-panel"></div>
       </section>
     </main>
   </div>
