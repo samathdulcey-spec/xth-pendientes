@@ -3,18 +3,8 @@
 // Supuestos (confirmar): empieza con 0 corazones perdidos; comprar un corazón
 // restaura uno perdido; los puntos pueden no bajar de 0 al penalizar.
 
-export const PUNTOS = {
-  metaNormal: 111,
-  metaUltimaHora: 77,
-  oracion: 333,
-  iglesia: 777,
-  bonusATiempo: 55,
-  perdidaError: 55,
-  corazon: 7777,
-};
-
-export const STRIKES_POR_CORAZON = 2;
-export const CORAZONES_POR_RETO = 3;
+export { PUNTOS, STRIKES_POR_CORAZON, CORAZONES_POR_RETO } from './reglas.mjs';
+import { PUNTOS, STRIKES_POR_CORAZON, CORAZONES_POR_RETO } from './reglas.mjs';
 
 export function estadoInicial() {
   return { puntos: 0, strikes: 0, corazonesPerdidos: 0, retosPendientes: 0 };

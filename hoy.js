@@ -1,5 +1,6 @@
 import { marcarMeta, repartirMetas } from './organizador.mjs';
 import { pintarBarra } from './barra.js';
+import { parsearHoras } from './horas.mjs';
 
 // Metas diarias. Son provisionales: se pueden editar o quitar en cualquier momento.
 const METAS_INICIALES = [
@@ -32,14 +33,6 @@ function guardarHoy(estado) {
   } catch (err) {
     console.warn('No se pudo guardar el plan de hoy:', err);
   }
-}
-
-// Convierte "09:00, 14:00" en ["09:00", "14:00"] y descarta lo que no sea hora.
-function parsearHoras(texto) {
-  return texto
-    .split(',')
-    .map((h) => h.trim())
-    .filter((h) => /^([01]\d|2[0-3]):[0-5]\d$/.test(h));
 }
 
 export function iniciarHoy() {
