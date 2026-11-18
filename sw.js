@@ -13,7 +13,6 @@ const ARCHIVOS = [
   './mobs.mjs',
   './skin.mjs',
   './contenido.js',
-  './contenido.json',
   './deducir.mjs',
   './categorias.mjs',
   './publicaciones.mjs',
